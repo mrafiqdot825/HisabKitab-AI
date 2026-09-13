@@ -1,6 +1,7 @@
 import asyncio
 import json
 import re
+
 from google import genai
 from google.genai import errors as genai_errors
 from google.genai import types
@@ -62,7 +63,7 @@ class GeminiProvider:
 
                 return self._parse_response(response.text)
 
-            except asyncio.TimeoutError as exc:
+            except TimeoutError:
                 logger.warning(
                     f"Gemini call timed out after {self.timeout_seconds}s (attempt {attempt + 1})"
                 )
@@ -89,11 +90,11 @@ class GeminiProvider:
                 await asyncio.sleep(0.5 * (2**attempt))
 
             except (ValidationError, json.JSONDecodeError) as exc:
-                logger.error(f"Failed to validate Gemini structured output: {str(exc)}")
+                logger.error(f"Failed to validate Gemini structured output: {exc!s}")
                 raise AIProviderError("Received malformed plan data from AI service.") from exc
 
             except Exception as exc:
-                logger.error(f"Unexpected error calling Gemini: {str(exc)}")
+                logger.error(f"Unexpected error calling Gemini: {exc!s}")
                 raise AIProviderError("Failed to communicate with AI service.") from exc
 
         if last_exception:
@@ -111,4 +112,3 @@ class GeminiProvider:
 
         data = json.loads(cleaned)
         return RawAIPlanOutput.model_validate(data)
-

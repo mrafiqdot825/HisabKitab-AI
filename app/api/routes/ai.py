@@ -1,5 +1,7 @@
 from typing import Annotated
+
 from fastapi import APIRouter, Depends, status
+
 from app.api.deps import check_rate_limit, get_optional_auth_user, get_planning_service
 from app.core.logging import logger
 from app.schemas.ai_response import PlanningResponse
@@ -29,4 +31,3 @@ async def generate_plan(
         f"Received generate-plan request from {user_id or 'guest'} for {request.budget} {request.currency}"
     )
     return await planning_service.generate_plan(request)
-

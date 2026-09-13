@@ -1,5 +1,7 @@
 from typing import Annotated
+
 from fastapi import Header, Request
+
 from app.core.config import get_settings
 from app.core.errors import RateLimitExceededError
 from app.core.logging import logger
@@ -48,4 +50,3 @@ async def get_optional_auth_user(
         return f"authenticated-user-{token[:8]}..."
 
     return None
-

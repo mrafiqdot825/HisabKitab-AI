@@ -1,4 +1,5 @@
 from typing import Protocol
+
 from app.schemas.ai_response import RawAIPlanOutput
 
 
@@ -12,4 +13,3 @@ class AIProvider(Protocol):
     ) -> RawAIPlanOutput:
         """Generate a structured planning response using the underlying AI model."""
         ...
-

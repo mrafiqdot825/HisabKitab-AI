@@ -1,8 +1,10 @@
 from typing import Any
+
 from fastapi import Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+
 from app.core.logging import logger
 
 
@@ -17,7 +19,9 @@ class ErrorResponse(BaseModel):
 
 
 class BaseAppException(Exception):
-    def __init__(self, code: str, message: str, status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR):
+    def __init__(
+        self, code: str, message: str, status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
+    ):
         super().__init__(message)
         self.code = code
         self.message = message
@@ -61,14 +65,18 @@ class BusinessValidationError(BaseAppException):
 
 
 async def app_exception_handler(request: Request, exc: BaseAppException) -> JSONResponse:
-    logger.warning(f"Application error on {request.method} {request.url.path}: {exc.code} - {exc.message}")
+    logger.warning(
+        f"Application error on {request.method} {request.url.path}: {exc.code} - {exc.message}"
+    )
     return JSONResponse(
         status_code=exc.status_code,
         content={"error": {"code": exc.code, "message": exc.message}},
     )
 
 
-async def validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+async def validation_exception_handler(
+    request: Request, exc: RequestValidationError
+) -> JSONResponse:
     logger.warning(f"Validation error on {request.method} {request.url.path}: {exc.errors()}")
     first_error = exc.errors()[0] if exc.errors() else {}
     msg = first_error.get("msg", "Invalid request parameters")
@@ -87,7 +95,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 
 async def generic_exception_handler(request: Request, exc: Exception) -> JSONResponse:
-    logger.exception(f"Unhandled server error on {request.method} {request.url.path}: {str(exc)}")
+    logger.exception(f"Unhandled server error on {request.method} {request.url.path}: {exc!s}")
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={
@@ -97,4 +105,3 @@ async def generic_exception_handler(request: Request, exc: Exception) -> JSONRes
             }
         },
     )
-

@@ -22,4 +22,3 @@ class PromptService:
             preferences=request.preferences,
             existing_expenses=existing_expenses,
         )
-

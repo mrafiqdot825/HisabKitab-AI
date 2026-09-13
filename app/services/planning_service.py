@@ -44,4 +44,3 @@ class PlanningService:
             f"PlanningService: Plan successfully generated and verified for budget={request.budget} {request.currency}"
         )
         return validated_plan
-

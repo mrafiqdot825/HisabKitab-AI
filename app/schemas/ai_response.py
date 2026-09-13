@@ -1,4 +1,5 @@
 from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -73,4 +74,3 @@ class RawAIPlanOutput(BaseModel):
         default_factory=list,
         description="Personalized practical tips",
     )
-

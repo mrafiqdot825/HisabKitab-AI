@@ -28,4 +28,3 @@ class AIService:
             system_instruction=system_instruction,
             user_prompt=user_prompt,
         )
-

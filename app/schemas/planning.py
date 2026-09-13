@@ -1,4 +1,5 @@
 from typing import Annotated
+
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -7,7 +8,9 @@ class Expense(BaseModel):
 
     category: Annotated[str, Field(min_length=1, max_length=50, description="Expense category")]
     amount: Annotated[float, Field(ge=0, description="Expense amount in specified currency")]
-    description: Annotated[str | None, Field(default=None, max_length=200, description="Optional note or context")]
+    description: Annotated[
+        str | None, Field(default=None, max_length=200, description="Optional note or context")
+    ]
 
     @field_validator("category")
     @classmethod
@@ -22,13 +25,27 @@ class PlanningRequest(BaseModel):
     """Input payload for generating an intelligent financial budget plan."""
 
     budget: Annotated[float, Field(gt=0, description="Total budget amount (must be positive)")]
-    currency: Annotated[str, Field(min_length=1, max_length=10, description="Currency code or symbol (e.g. PKR, USD)")]
-    people: Annotated[int, Field(ge=1, description="Number of people in household or planning group")]
-    duration_days: Annotated[int, Field(ge=1, description="Planning duration in days (e.g. 30 for monthly)")]
-    goal: Annotated[str, Field(min_length=3, max_length=500, description="User's primary financial planning goal")]
+    currency: Annotated[
+        str,
+        Field(min_length=1, max_length=10, description="Currency code or symbol (e.g. PKR, USD)"),
+    ]
+    people: Annotated[
+        int, Field(ge=1, description="Number of people in household or planning group")
+    ]
+    duration_days: Annotated[
+        int, Field(ge=1, description="Planning duration in days (e.g. 30 for monthly)")
+    ]
+    goal: Annotated[
+        str,
+        Field(min_length=3, max_length=500, description="User's primary financial planning goal"),
+    ]
     categories: Annotated[list[str], Field(min_length=1, description="List of budget categories")]
-    preferences: Annotated[list[str], Field(default_factory=list, description="User preferences or constraints")]
-    existing_expenses: Annotated[list[Expense], Field(default_factory=list, description="Known or fixed expenses")]
+    preferences: Annotated[
+        list[str], Field(default_factory=list, description="User preferences or constraints")
+    ]
+    existing_expenses: Annotated[
+        list[Expense], Field(default_factory=list, description="Known or fixed expenses")
+    ]
 
     @field_validator("currency")
     @classmethod
@@ -58,4 +75,3 @@ class PlanningRequest(BaseModel):
     @classmethod
     def validate_preferences(cls, v: list[str]) -> list[str]:
         return [p.strip() for p in v if p.strip()]
-

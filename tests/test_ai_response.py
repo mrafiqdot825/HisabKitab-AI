@@ -91,5 +91,3 @@ def test_gemini_provider_malformed_json_raises():
     provider = GeminiProvider(api_key="dummy-key")
     with pytest.raises(json.JSONDecodeError):
         provider._parse_response("This is not JSON at all")
-
-

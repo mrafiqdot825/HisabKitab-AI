@@ -38,4 +38,3 @@ class InMemorySlidingWindowRateLimiter:
     def reset(self) -> None:
         """Reset all rate limit counters (useful for unit testing)."""
         self._history.clear()
-

@@ -86,4 +86,3 @@ def process_and_validate_financials(
         weekly_plan=raw_plan.weekly_plan,
         tips=raw_plan.tips,
     )
-

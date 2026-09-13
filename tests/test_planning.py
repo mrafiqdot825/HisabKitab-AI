@@ -106,4 +106,3 @@ def test_ai_timeout_error_handling(client: TestClient, valid_planning_payload: d
         assert "timed out" in data["error"]["message"]
     finally:
         app.dependency_overrides.clear()
-

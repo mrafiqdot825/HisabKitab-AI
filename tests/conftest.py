@@ -16,7 +16,9 @@ from app.services.planning_service import PlanningService
 class MockAIProvider:
     """Mock AIProvider for deterministic testing without calling Gemini."""
 
-    def __init__(self, raw_output: RawAIPlanOutput | None = None, raise_error: Exception | None = None):
+    def __init__(
+        self, raw_output: RawAIPlanOutput | None = None, raise_error: Exception | None = None
+    ):
         self.raw_output = raw_output or RawAIPlanOutput(
             summary="A balanced monthly personal plan prioritizing food and savings.",
             allocations=[
@@ -112,4 +114,3 @@ def valid_planning_payload():
             }
         ],
     }
-

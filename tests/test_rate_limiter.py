@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
+
+from app.api import deps
 from app.utils.rate_limiter import InMemorySlidingWindowRateLimiter
-import app.api.deps as deps
 
 
 def test_in_memory_rate_limiter_logic():
@@ -38,4 +39,3 @@ def test_api_rate_limiting_enforcement(client: TestClient, valid_planning_payloa
         assert data["error"]["code"] == "RATE_LIMIT_EXCEEDED"
     finally:
         deps._rate_limiter = original_limiter
-

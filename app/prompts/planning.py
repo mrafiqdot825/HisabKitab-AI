@@ -64,4 +64,3 @@ def build_user_planning_prompt(
     )
 
     return "\n".join(prompt_lines)
-
