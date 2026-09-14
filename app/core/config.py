@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     # Google Gemini Configuration
     gemini_api_key: str = "development_mock_key"
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.8-flash"
 
     # Application Environment
     app_env: str = "development"

@@ -3,7 +3,6 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-
 from app.api.routes.ai import router as ai_router
 from app.api.routes.health import router as health_router
 from app.core.config import get_settings
@@ -35,7 +34,7 @@ def create_app() -> FastAPI:
             "Production-ready AI financial planning and budgeting backend "
             "powered by FastAPI and Google Gemini."
         ),
-        version="0.1.0",
+        version="1.0.0",
         docs_url="/docs",
         redoc_url="/redoc",
         lifespan=lifespan,
@@ -69,7 +68,7 @@ def create_app() -> FastAPI:
         current_settings = get_settings()
         return {
             "service": "HisabKitab AI Backend (حساب کتاب)",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "status": "online",
             "tagline": "Clear hisaab, happy ghar",
             "environment": current_settings.app_env,
